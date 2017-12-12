@@ -44,26 +44,29 @@ def writeM(data,n):
 		Rlength=len(relation[0])
 	book=xlwt.Workbook()
 	sheet=book.add_sheet('sheet1',cell_overwrite_ok=True)
+	#判断是否有表头
 	if Orientation=='HORIZONTAL':
 		for i in range(length):
 			for j in range(Rlength):
-				sheet.write(i,j,relation[i][j][0:3000])
-		row=length#行数3
-		col=len(relation[0])#列数4
-		book.save("table/"+"%s_%s_%s_%s_%s_%s_%s_%s.xls"%(tabletype,pagename,row,col,header,header_row,key,keycolumn))
+				sheet.write(j,i,relation[i][j][0:3000])
+		row=Rlength
+		col=length
+		book.save("table/"+"%d_%s_%s_%s_%s_%s_%s_%s_%s.xls"%(n,tabletype,pagename,row,col,header,header_row,key,keycolumn))
 	elif Orientation=='VERTICAL':
 		for i in range(length):
 			for j in range(Rlength):
-				sheet.write(j,i,relation[i][j][0:3000])
-		row=len(relation[0])#行数4
-		col=length#列数3
-		book.save("table/"+"%s_%s_%s_%s_%s_%s_%s_%s.xls"%(tabletype,pagename,row,col,header,header_row,key,keycolumn))
+				sheet.write(i,j,relation[i][j][0:3000])
+		row=length
+		col=len(relation[0])
+		book.save("table/"+"%d_%s_%s_%s_%s_%s_%s_%s_%s.xls"%(n,tabletype,pagename,row,col,header,header_row,key,keycolumn))
+
 if __name__ =="__main__":
 	global sum
 	sum=0
 	datass=readexcel("sample")
 	for i in range(len(datass)):
 		print("第%d个表格"%i)
+	#	pprint(datass[i])
 		writeM(datass[i],i)
 	print("有差错的表格数目:",sum)
 	
